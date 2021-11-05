@@ -1,5 +1,5 @@
 import py5
-from vector.svec2d import Vec2D
+from vector.vec2d import Vec2D
 # Bouncing Ball with Vectors
 # by Daniel Shiffman.
 # PVector was used in the original (instead of Vec2D)
@@ -30,8 +30,8 @@ def draw():
     # Add gravity to velocity
     velocity += gravity
     # Bounce off edges
-    limit = range(RADIUS, W - RADIUS)
-    if (loc.x not in limit):
+
+    if (off_limits(loc)):
         velocity.x *= -1.0
     if (loc.y > (H - RADIUS)):
         # We're reducing velocity ever so slightly
@@ -51,5 +51,9 @@ def settings():
 
 def sketch_title(name):
     py5.get_surface().set_title(name)
+
+def off_limits(loc):
+    return (loc.x < RADIUS or loc.x > W - RADIUS)
+
 
 py5.run_sketch()
