@@ -8,12 +8,9 @@ from vector.vec2d import Vec2D
 # This example is not object-oriented
 # See AccelerationWithVectors for an example of how to simulate motion using vectors in an object
 #
-
 RADIUS = 24
 W = 640
 H = 360
-
-
 
 def setup():
     global loc, velocity, gravity
@@ -30,7 +27,6 @@ def draw():
     # Add gravity to velocity
     velocity += gravity
     # Bounce off edges
-
     if (off_limits(loc)):
         velocity.x *= -1.0
     if (loc.y > (H - RADIUS)):
@@ -54,6 +50,5 @@ def sketch_title(name):
 
 def off_limits(loc):
     return (loc.x < RADIUS or loc.x > W - RADIUS)
-
 
 py5.run_sketch()
