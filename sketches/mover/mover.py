@@ -28,3 +28,7 @@ class Mover(object):
         py5.stroke_weight(2)
         py5.fill(127)
         py5.ellipse(self.location.x, self.location.y, 48, 48)
+
+    def run(self):
+        self.update()
+        self.display()

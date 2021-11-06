@@ -23,10 +23,7 @@ def setup():
 
 def draw():
     py5.background(0)
-    # Update the location
-    mover.update()
-    # Display the Mover
-    mover.display()
+    mover.run()
 
 def sketch_title(name):
     py5.get_surface().set_title(name)
