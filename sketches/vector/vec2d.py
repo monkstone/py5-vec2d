@@ -79,6 +79,10 @@ class Vec2D:
         if (self.mag_sq() > (max * max)):
             self.set_mag(max)
 
+    def __str__(self):
+        vec2d = "Vec2D({x:.3f}, {y:.3f})"
+        return vec2d.format(x = self.x, y = self.y)
+
     @classmethod
     def from_angle(cls, angle, length=1):
         return Vec2D(length * math.cos(angle), length * math.sin(angle))

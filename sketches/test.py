@@ -1,4 +1,4 @@
-from vector.svec2d import Vec2D
+from vector.vec2d import Vec2D
 
 fred = Vec2D(2, 3)
 
@@ -12,4 +12,4 @@ print(ted.x)
 print(ted.y)
 
 
-print(fred.dist(ted))
+print(fred)
