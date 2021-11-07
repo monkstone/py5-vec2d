@@ -1,5 +1,5 @@
 import py5
-from vector.vec2d import Vec2D
+from ../vector.vec2d import Vec2D
 
 class Mover(object):
 

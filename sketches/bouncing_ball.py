@@ -13,21 +13,22 @@ W = 640
 H = 360
 
 def setup():
-    global loc, velocity, gravity
+    global xboundary, loc, velocity, gravity
     sketch_title('Bouncing Ball')
     loc = Vec2D(50, 100)
     velocity = Vec2D(1.5, 2.1)
     gravity = Vec2D(0, 0.2)
+    xboundary = Boundary(RADIUS, W - RADIUS)
 
 def draw():
-    global loc, velocity, gravity
+    global xboundary, loc, velocity, gravity
     py5.background(0)
     # Add velocity to the location.
     loc += velocity
     # Add gravity to velocity
     velocity += gravity
     # Bounce off edges
-    if (off_limits(loc)):
+    if (xboundary.not_include(loc.x)):
         velocity.x *= -1.0
     if (loc.y > (H - RADIUS)):
         # We're reducing velocity ever so slightly
@@ -48,7 +49,15 @@ def settings():
 def sketch_title(name):
     py5.get_surface().set_title(name)
 
-def off_limits(loc):
-    return (loc.x < RADIUS or loc.x > W - RADIUS)
+class Boundary:
+    '''
+    Simple Boundary class
+    '''
+    def __init__(self, lower, upper):
+        self.lo = lower
+        self.hi = upper
+
+    def not_include(self, val):
+        return (val < self.lo or val > self.hi)
 
 py5.run_sketch()

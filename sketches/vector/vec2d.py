@@ -2,6 +2,7 @@
 # inspired by Villares PVector and Vec2D ruby-processing
 
 import math
+import operator
 from numbers import Number
 import copy
 
@@ -10,11 +11,12 @@ TWO_PI = math.tau
 class Vec2D:
 
     def __init__(self, *args):
+        global x, y
         if len(args) == 0:
             self.x = 0
             self.y = 0
         if len(args) == 1:
-            self = copy.deepcopy(args[0])
+            self = args[0].copy()
         if len(args) == 2:
             self.x = args[0]
             self.y = args[1]
@@ -32,16 +34,29 @@ class Vec2D:
         return temp
 
     def __mul__(self, other):
+        assert type(other) in (int, float)
         temp = Vec2D()
         temp.x = self.x * other
         temp.y = self.y * other
         return temp
 
+    def __truediv__(self, other):
+        temp = Vec2D()
+        temp.x = self.x / other
+        temp.y = self.y / other
+        return temp
+
+    def __itruediv__(self, other):
+        temp = Vec2D()
+        temp.x = self.x // other
+        temp.y = self.y // other
+        return temp
+
     def mag(self):
         return math.sqrt(self.mag_sq())
 
-    def to_array(self):
-        return [self.x, self.y]
+    def tuple(self):
+        return (self.x, self.y)
 
     def mag_sq(self):
         return self.x * self.x + self.y * self.y
@@ -78,6 +93,13 @@ class Vec2D:
     def limit(self, max):
         if (self.mag_sq() > (max * max)):
             self.set_mag(max)
+
+    def copy(self):
+        return Vec2D(self.x, self.y)
+
+    def heading(self):
+        return math.atan2(self.y, self.x)
+
 
     def __str__(self):
         vec2d = "Vec2D({x:.3f}, {y:.3f})"

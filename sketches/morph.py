@@ -48,7 +48,7 @@ def draw():
     py5.stroke(255)
     py5.stroke_weight(4)
     py5.begin_shape()
-    py5.vertices([v.to_array() for v in morph])
+    py5.vertices([v.tuple() for v in morph])
     py5.end_shape(py5.CLOSE)
 
 def sketch_title(name):
