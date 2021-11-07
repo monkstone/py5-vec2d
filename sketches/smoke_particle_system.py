@@ -17,7 +17,7 @@ def settings():
 
 def setup():
     global ps
-
+    sketch_title('Smoke Particle System')
     img = py5.load_image('texture.png')
     ps = ParticleSystem(0, Vec2D(py5.width / 2, py5.height - 60), img)
 
@@ -53,5 +53,8 @@ def draw_vector(v, loc, scayl):
         py5.line(0, 0, len, 0)
         py5.line(len, 0, len - arrowsize, + arrowsize / 2)
         py5.line(len, 0, len - arrowsize, - arrowsize / 2)
+
+def sketch_title(name):
+    py5.get_surface().set_title(name)
 
 py5.run_sketch()
