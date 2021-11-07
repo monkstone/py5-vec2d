@@ -1,5 +1,5 @@
-# A quick proof of concept, Vec2D-like class for use with my py5 sketches
-# inspired by Villares PVector and Vec2D ruby-processing
+# A quick proof of concept, Vec3D-like class for use with my py5 sketches
+# inspired by Villares PVector and Vec3D ruby-processing
 
 import math
 import operator
@@ -8,57 +8,64 @@ import copy
 
 TWO_PI = math.tau
 
-class Vec2D:
+class Vec3D:
 
     def __init__(self, *args):
         if len(args) == 0:
             self.x = 0
             self.y = 0
+            self.z = 0
         if len(args) == 1:
             self = args[0].copy()
-        if len(args) == 2:
+        if len(args) == 3:
             self.x = args[0]
             self.y = args[1]
+            self.z = args[2]
 
     def __add__(self, other):
-        temp = Vec2D()
+        temp = Vec3D()
         temp.x = self.x + other.x
         temp.y = self.y + other.y
+        temp.z = self.z + other.z
         return temp
 
     def __sub__(self, other):
-        temp = Vec2D()
+        temp = Vec3D()
         temp.x = self.x - other.x
         temp.y = self.y - other.y
+        temp.z = self.z - other.z
         return temp
 
     def __mul__(self, other):
         assert type(other) in (int, float)
-        temp = Vec2D()
+        temp = Vec3D()
         temp.x = self.x * other
         temp.y = self.y * other
+        temp.z = self.z * other
         return temp
 
     def __truediv__(self, other):
-        temp = Vec2D()
+        temp = Vec3D()
         temp.x = self.x / other
         temp.y = self.y / other
+        temp.z = self.z / other
         return temp
 
     def __itruediv__(self, other):
-        temp = Vec2D()
+        temp = Vec3D()
         temp.x = self.x // other
         temp.y = self.y // other
+        temp.z = self.z // other
         return temp
 
     def mag(self):
         return math.sqrt(self.mag_sq())
 
     def tuple(self):
-        return (self.x, self.y)
+        return (self.x, self.y, self.z)
 
     def mag_sq(self):
-        return self.x * self.x + self.y * self.y
+        return self.x * self.x + self.y * self.y + self.z * self.z
 
     def set_mag(self, magnitude):
         return self.normalize().__mul__(magnitude)
@@ -68,24 +75,26 @@ class Vec2D:
         if magnitude != 0:
             self.x *= (1 / magnitude)
             self.y *= (1 / magnitude)
+            self.z *= (1 / magnitude)
         return self
 
     def dist_squared(self, other):
-        return self.x - other.x * self.x - other.x + self.y - other.y * self.y - other.y
+        return (self.x - other.x)**2 + (self.y - other.y)**2 + (self.z - other.z)**2
 
     def dist(self, other):
-        return math.dist(self.tuple(), other.tuple())
+        return math.sqrt(self.dist_squared(other))
 
     def set(self, *args):
-        if len(args) == 2:
-            self.x, self.y = args
+        if len(args) == 3:
+            self.x, self.y, self.z = args
         elif len(args) == 1:
-            self.x, self.y = args[0]
+            self.x, self.y, self.z = args[0]
 
     def lerp(self, other, t):
         self.set(
             self.x + (other.x - self.x) * t,
-            self.y + (other.y - self.y) * t
+            self.y + (other.y - self.y) * t,
+            self.z + (other.z - self.z) * t
             )
         return self
 
@@ -94,16 +103,17 @@ class Vec2D:
             self.set_mag(max)
 
     def copy(self):
-        return Vec2D(self.x, self.y)
-
-    def heading(self):
-        return math.atan2(self.y, self.x)
+        return Vec3D(self.x, self.y, self.z)
 
 
     def __str__(self):
-        vec2d = "Vec2D({x:.3f}, {y:.3f})"
-        return vec2d.format(x = self.x, y = self.y)
+        Vec3D = "Vec3D({x:.3f}, {y:.3f}, {z:.3f})"
+        return Vec3D.format(x = self.x, y = self.y, z = self.z)
 
     @classmethod
-    def from_angle(cls, angle, length=1):
-        return Vec2D(length * math.cos(angle), length * math.sin(angle))
+    def from_angles(theta, phi, length=1):
+        cos_phi = math.cos(phi)
+        sin_phi = math.sin(phi)
+        cos_theta = math.cos(theta)
+        sin_theta = math.sin(theta)
+        return Vec3D(length * sin_theta * sin_phi, -length * cos_theta, length * sin_theta * cos_phi)
