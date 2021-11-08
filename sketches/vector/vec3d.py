@@ -98,6 +98,15 @@ class Vec3D:
             )
         return self
 
+    def cross(self, other):
+        x = self.y * other.z - other.y * self.z
+        y = self.z * other.x - other.z * self.x
+        z = self.x * other.y - other.x * self.y
+        return Vec3D(x, y, z)
+
+    def dot(self, other):
+        return self.x * other.x + self.y * other.y + self.z * other.z
+
     def limit(self, max):
         if (self.mag_sq() > (max * max)):
             self.set_mag(max)
