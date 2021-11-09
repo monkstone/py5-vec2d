@@ -1,11 +1,10 @@
 import py5
 import math
 from vector.vec3d import Vec3D
-# elegant_ball.rb
 # After a vanilla processing sketch by
 # Ben Notorianni aka lazydog
 #
-# elegant.rb
+# elegant_ball.py
 W = 800
 H = 800
 
@@ -119,9 +118,7 @@ def draw_icosahedron(depth, r, spherical):
 #
 def draw_triangle(depth, r, p1, p2, p3):
     if depth == 1:
-        py5.vertex(p1.x, p1.y, p1.z)
-        py5.vertex(p2.x, p2.y, p2.z)
-        py5.vertex(p3.x, p3.y, p3.z)
+        py5.vertices([v.tuple() for v in [p1, p2, p3]])
     else:
         # Calculate the mid points of this triangle.
         v1 = (p1 + p2) * 0.5
