@@ -4,7 +4,9 @@ A parametric surface is textured procedurally
 by drawing on an offscreen PGraphics surface.
 """
 import py5
+import math
 from surface.surface import *
+PI = math.pi
 
 W = 1024
 H = 768
@@ -42,8 +44,8 @@ def draw():
 
     with py5.push_matrix():
         py5.translate(W / 2, H / 2, -200)
-        py5.rotate_x(py5.frame_count * py5.PI / 500)
-        py5.rotate_y(py5.frame_count * py5.PI / 500)
+        py5.rotate_x(py5.frame_count * PI / 500)
+        py5.rotate_y(py5.frame_count * PI / 500)
         py5.shape(trefoil)
 
 def sketch_title(name):

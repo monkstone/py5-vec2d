@@ -68,14 +68,17 @@ class Vec3D:
         return self.x * self.x + self.y * self.y + self.z * self.z
 
     def set_mag(self, magnitude):
-        return self.normalize().__mul__(magnitude)
+        current = self.mag()
+        self.x *= magnitude / current
+        self.y *= magnitude / current
+        self.z *= magnitude / current
+        return self
 
     def normalize(self):
         magnitude = self.mag()
-        if magnitude != 0:
-            self.x *= (1 / magnitude)
-            self.y *= (1 / magnitude)
-            self.z *= (1 / magnitude)
+        self.x *= (1.0 / magnitude)
+        self.y *= (1.0 / magnitude)
+        self.z *= (1.0 / magnitude)
         return self
 
     def dist_squared(self, other):
@@ -126,3 +129,16 @@ class Vec3D:
         cos_theta = math.cos(theta)
         sin_theta = math.sin(theta)
         return Vec3D(length * sin_theta * sin_phi, -length * cos_theta, length * sin_theta * cos_phi)
+
+def test():
+    fred = Vec3D(1.0, 1.0, 1.0)
+    assert fred.mag_sq() == 3.0
+    assert fred.mag() == math.sqrt(3.0)
+    fred.normalize()
+    assert fred.mag() == 1.0
+    fred.set_mag(3.0)
+    print(fred.mag())
+    assert fred.mag() == 3.0
+
+if __name__ == '__main__':
+     test()
