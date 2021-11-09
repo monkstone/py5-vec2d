@@ -89,26 +89,26 @@ def draw_icosahedron(depth, r, spherical):
     if not spherical:
         r = 0.0
     py5.begin_shape(py5.TRIANGLES)
-    draw_triangle(depth, r, v[0], v[7], v[4])
-    draw_triangle(depth, r, v[0], v[4], v[11])
-    draw_triangle(depth, r, v[0], v[11], v[3])
-    draw_triangle(depth, r, v[0], v[3], v[8])
-    draw_triangle(depth, r, v[0], v[8], v[7])
-    draw_triangle(depth, r, v[1], v[4], v[7])
-    draw_triangle(depth, r, v[1], v[10], v[4])
-    draw_triangle(depth, r, v[10], v[11], v[4])
-    draw_triangle(depth, r, v[11], v[5], v[10])
-    draw_triangle(depth, r, v[5], v[3], v[11])
-    draw_triangle(depth, r, v[3], v[6], v[5])
-    draw_triangle(depth, r, v[6], v[8], v[3])
-    draw_triangle(depth, r, v[8], v[9], v[6])
-    draw_triangle(depth, r, v[9], v[7], v[8])
-    draw_triangle(depth, r, v[7], v[1], v[9])
-    draw_triangle(depth, r, v[2], v[1], v[9])
-    draw_triangle(depth, r, v[2], v[10], v[1])
-    draw_triangle(depth, r, v[2], v[5], v[10])
-    draw_triangle(depth, r, v[2], v[6], v[5])
-    draw_triangle(depth, r, v[2], v[9], v[6])
+    draw_triangle(depth, r, [v[0], v[7], v[4]])
+    draw_triangle(depth, r, [v[0], v[4], v[11]])
+    draw_triangle(depth, r, [v[0], v[11], v[3]])
+    draw_triangle(depth, r, [v[0], v[3], v[8]])
+    draw_triangle(depth, r, [v[0], v[8], v[7]])
+    draw_triangle(depth, r, [v[1], v[4], v[7]])
+    draw_triangle(depth, r, [v[1], v[10], v[4]])
+    draw_triangle(depth, r, [v[10], v[11], v[4]])
+    draw_triangle(depth, r, [v[11], v[5], v[10]])
+    draw_triangle(depth, r, [v[5], v[3], v[11]])
+    draw_triangle(depth, r, [v[3], v[6], v[5]])
+    draw_triangle(depth, r, [v[6], v[8], v[3]])
+    draw_triangle(depth, r, [v[8], v[9], v[6]])
+    draw_triangle(depth, r, [v[9], v[7], v[8]])
+    draw_triangle(depth, r, [v[7], v[1], v[9]])
+    draw_triangle(depth, r, [v[2], v[1], v[9]])
+    draw_triangle(depth, r, [v[2], v[10], v[1]])
+    draw_triangle(depth, r, [v[2], v[5], v[10]])
+    draw_triangle(depth, r, [v[2], v[6], v[5]])
+    draw_triangle(depth, r, [v[2], v[9], v[6]])
     py5.end_shape()
 
 
@@ -116,14 +116,14 @@ def draw_icosahedron(depth, r, spherical):
 # Draw a triangle either immediately or subdivide it first.
 # If depth is 1 then draw the triangle otherwise subdivide first.
 #
-def draw_triangle(depth, r, p1, p2, p3):
+def draw_triangle(depth, r, triangle):
     if depth == 1:
-        py5.vertices([v.tuple() for v in [p1, p2, p3]])
+        py5.vertices([v.tuple() for v in triangle])
     else:
         # Calculate the mid points of this triangle.
-        v1 = (p1 + p2) * 0.5
-        v2 = (p2 + p3) * 0.5
-        v3 = (p3 + p1) * 0.5
+        v1 = (triangle[0] + triangle[1]) * 0.5
+        v2 = (triangle[1] + triangle[2]) * 0.5
+        v3 = (triangle[2] + triangle[0]) * 0.5
         if r != 0:
             # Project the vertices out onto the sphere with radius r.
             v1.set_mag(r)
@@ -131,11 +131,11 @@ def draw_triangle(depth, r, p1, p2, p3):
             v3.set_mag(r)
         # Generate the next level of detail
         depth -= 1
-        draw_triangle(depth, r, p1, v1, v3)
-        draw_triangle(depth, r, v1, p2, v2)
-        draw_triangle(depth, r, v2, p3, v3)
+        draw_triangle(depth, r, [triangle[0], v1, v3])
+        draw_triangle(depth, r, [v1, triangle[1], v2])
+        draw_triangle(depth, r, [v2, triangle[2], v3])
         # Uncomment out the next line to include the central part of the triangle.
-        # draw_triangle(depth, r, v1, v2, v3)
+        # draw_triangle(depth, r, [v1, v2, v3])
 
 def settings():
     py5.size(W, H, py5.P3D)
