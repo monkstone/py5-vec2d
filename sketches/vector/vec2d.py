@@ -61,7 +61,10 @@ class Vec2D:
         return self.x * self.x + self.y * self.y
 
     def set_mag(self, magnitude):
-        return self.normalize().__mul__(magnitude)
+        current = self.mag()
+        self.x *= magnitude / current
+        self.y *= magnitude / current
+        return self
 
     def normalize(self):
         magnitude = self.mag()

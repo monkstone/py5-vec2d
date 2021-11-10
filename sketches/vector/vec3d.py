@@ -117,6 +117,21 @@ class Vec3D:
     def copy(self):
         return Vec3D(self.x, self.y, self.z)
 
+    def rotate_y(self, theta):
+        co = math.cos(theta)
+        si = math.sin(theta)
+        xx = co * self.x - si * self.z
+        self.z = si * self.x + co * self.z
+        self.x = xx
+        return self
+
+    def rotate_x(self, theta):
+        co = math.cos(theta)
+        si = math.sin(theta)
+        zz = co * self.z - si * self.y
+        self.y = si * self.z + co * self.y
+        self.z = zz
+        return self
 
     def __str__(self):
         Vec3D = "Vec3D({x:.3f}, {y:.3f}, {z:.3f})"
