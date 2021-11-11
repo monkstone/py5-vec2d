@@ -31,11 +31,10 @@ def draw():
     py5.rotate_x(rotation.x)
     py5.rotate_y(rotation.y)
     py5.no_stroke()
-    py5.begin_shape(py5.TRIANGLES)
-    # iterate over all faces/triangles of the 'mesh'
-    for face in faces:
-        py5.vertices([v.tuple() for v in face])
-    py5.end_shape()
+    with py5.begin_shape(py5.TRIANGLES):
+        # iterate over all faces/triangles of the 'mesh'
+        for face in faces:
+            py5.vertices([v.tuple() for v in face])
     # update rotation
     rotation += Vec2D(0.014, 0.0237)
 
