@@ -33,6 +33,6 @@ class Circumcircle:
         pts = self.points
         a = [pts[0].mag_sq(), pts[0].x, 1.0]
         b = [pts[1].mag_sq(), pts[1].x, 1.0]
-        c = [pts[2].mag_sq(), 1.0]
+        c = [pts[2].mag_sq(), pts[1].x, 1.0]
         matrix = np.array([a, b, c])
         return np.linalg.det(matrix)
