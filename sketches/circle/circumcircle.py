@@ -23,16 +23,16 @@ class Circumcircle:
 
     def bx(self):
         pts = self.points
-        a = [pts[0].x**2 + pts[0].y**2, pts[0].y, 1.0]
-        b = [pts[1].x**2 + pts[1].y**2, pts[1].y, 1.0]
-        c = [pts[2].x**2 + pts[2].y**2, pts[2].y, 1.0]
+        a = [pts[0].mag_sq(), pts[0].y, 1.0]
+        b = [pts[1].mag_sq(), pts[1].y, 1.0]
+        c = [pts[2].mag_sq(), pts[2].y, 1.0]
         matrix = np.array([a, b, c])
         return -np.linalg.det(matrix)
 
     def by(self):
         pts = self.points
-        a = [pts[0].x**2 + pts[0].y**2, pts[0].x, 1.0]
-        b = [pts[1].x**2 + pts[1].y**2, pts[1].x, 1.0]
-        c = [pts[2].x**2 + pts[2].y**2, pts[2].x, 1.0]
+        a = [pts[0].mag_sq(), pts[0].x, 1.0]
+        b = [pts[1].mag_sq(), pts[1].x, 1.0]
+        c = [pts[2].mag_sq(), 1.0]
         matrix = np.array([a, b, c])
         return np.linalg.det(matrix)
