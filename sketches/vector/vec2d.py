@@ -99,6 +99,16 @@ class Vec2D:
     def copy(self):
         return Vec2D(self.x, self.y)
 
+    def cross(self, other):
+        return self.x * other.y - self.y * other.x
+
+    def dot(self, *args):
+        if len(args) == 2:
+            return self.x * args[0] + self.y * args[1]
+        else:
+            other = args[0]
+            return self.x * other.x + self.y * other.y
+
     def heading(self):
         return math.atan2(self.y, self.x)
 
@@ -110,3 +120,8 @@ class Vec2D:
     @classmethod
     def from_angle(cls, angle, length=1):
         return Vec2D(length * math.cos(angle), length * math.sin(angle))
+
+    @classmethod
+    def random(cls):
+        import random
+        return Vec2D.from_angle(random.random() * TWO_PI)
